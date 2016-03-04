@@ -1,7 +1,17 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+import os
+import sys
+
 from distutils.core import setup
 
 import db_email_backend
+
+if sys.argv[-1] == 'publish':
+    os.system("python setup.py sdist upload")
+    sys.exit()
 
 long_description = open('README').read()
 
