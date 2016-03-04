@@ -11,7 +11,7 @@ if sys.argv[-1] == 'publish':
     os.system("python setup.py sdist upload")
     sys.exit()
 
-long_description = open('README').read()
+long_description = open('README.md').read()
 
 setup_args = dict(
     name='django-db-email-backend',

@@ -35,7 +35,7 @@ class DBEmailBackendTest(TestCase):
 
         e = EmailMessage('test mail', 'this is just a test', 'jim@bob.com',
                          ['frank@example.com', 'joe@test.com'])
-        e.attach_file('README')
+        e.attach_file('README.md')
         e.send()
 
         email = Email.objects.get()
@@ -49,8 +49,8 @@ class DBEmailBackendTest(TestCase):
         self.assertEqual(email.headers, '')
 
         attachment = email.attachments.get()
-        self.assertEqual(attachment.filename, 'README')
-        with open('README') as f:
+        self.assertEqual(attachment.filename, 'README.md')
+        with open('README.md') as f:
             self.assertEqual(attachment.file.read().decode('utf8'), f.read())
         if django.VERSION >= (1, 9):
             self.assertEqual(attachment.mimetype, 'application/octet-stream')
