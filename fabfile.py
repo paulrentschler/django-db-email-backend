@@ -23,6 +23,10 @@ os.environ['PYTHONPATH'] = os.pathsep.join([ROOT, ])
 
 _local = functools.partial(_local, capture=False)
 
+def manage(cmd):
+    """Update a testing database"""
+    _local('django-admin.py {}'.format(cmd))
+
 
 def shell():
     """Start a Django shell with the test settings."""
@@ -31,12 +35,12 @@ def shell():
 
 def test(test_case=''):
     """Run the test suite."""
-    _local('django-admin.py test %s' % test_case)
+    _local('django-admin.py test {}'.format(test_case))
 
 
 def test_coverage():
-    _local('coverage run --source=%s --omit=*/migrations/*.py '
-           '$(which django-admin.py) test' % APP_NAME)
+    _local('coverage run --source={} --omit=*/migrations/*.py '
+           '$(which django-admin.py) test'.format(APP_NAME))
 
 
 def serve():
@@ -56,12 +60,12 @@ def schema(initial=False):
     """Create a schema migration for any changes."""
     if south:
         if initial:
-            _local('django-admin.py schemamigration %s --initial' % APP_NAME)
+            _local('django-admin.py schemamigration {} --initial'.format(APP_NAME))
         else:
-            _local('django-admin.py schemamigration %s --auto' % APP_NAME)
+            _local('django-admin.py schemamigration {} --auto'.format(APP_NAME))
     else:
-            _local('django-admin.py makemigrations %s' % APP_NAME)
+            _local('django-admin.py makemigrations')
 
-def migrate(migration=''):
+def migrate(app_name='', migration=''):
     """Update a testing database"""
-    _local('django-admin.py migrate %s %s' % (APP_NAME, migration))
+    _local('django-admin.py migrate {} {}'.format(APP_NAME, migration))
