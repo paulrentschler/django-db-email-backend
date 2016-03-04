@@ -25,7 +25,7 @@ class Email(models.Model):
 class EmailAlternative(models.Model):
     email = models.ForeignKey(Email, related_name='alternatives')
     content = models.TextField(blank=True)
-    mimetype = models.CharField(max_length=254)
+    mimetype = models.CharField(max_length=254, blank=True)
 
     def __str__(self):
         return '{}: alternative {}'.format(self.email, self.mimetype)
@@ -35,7 +35,7 @@ class EmailAlternative(models.Model):
 class EmailAttachment(models.Model):
     email = models.ForeignKey(Email, related_name='attachments')
     filename = models.CharField(max_length=1000, blank=True)
-    mimetype = models.CharField(max_length=254)
+    mimetype = models.CharField(max_length=254, blank=True)
     file = models.FileField(upload_to='db_email_backend')
 
     def __str__(self):

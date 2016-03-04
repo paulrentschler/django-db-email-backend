@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.test import TestCase, override_settings
+from django.test import TestCase
+from django.test.utils import override_settings
 from django.core.mail import send_mail, EmailMessage, EmailMultiAlternatives
+import django
 
 from db_email_backend.models import Email, EmailAlternative, EmailAttachment
 
@@ -48,8 +50,11 @@ class DBEmailBackendTest(TestCase):
 
         attachment = email.attachments.get()
         self.assertEqual(attachment.filename, 'README')
-        self.assertEqual(attachment.mimetype, 'application/octet-stream')
         self.assertEqual(attachment.file.read(), file('README').read())
+        if django.VERSION >= (1, 9):
+            self.assertEqual(attachment.mimetype, 'application/octet-stream')
+        else:
+            self.assertEqual(attachment.mimetype, '')
 
         self.assertEqual(email.alternatives.count(), 0)
 

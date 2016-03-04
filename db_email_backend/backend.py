@@ -26,14 +26,14 @@ class DBEmailBackend(BaseEmailBackend):
                     EmailAlternative.objects.create(
                         email=email,
                         content=content,
-                        mimetype=mimetype,
+                        mimetype=mimetype or '',
                     )
 
                 for filename, content, mimetype in msg.attachments:
                     attachment = EmailAttachment.objects.create(
                         email=email,
                         filename=filename,
-                        mimetype=mimetype,
+                        mimetype=mimetype or '',
                     )
                     attachment.file.save(filename, ContentFile(content))
             except:
