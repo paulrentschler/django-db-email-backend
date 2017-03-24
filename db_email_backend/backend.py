@@ -19,7 +19,7 @@ class DBEmailBackend(BaseEmailBackend):
                     cc='; '.join(msg.cc),
                     bcc='; '.join(msg.bcc),
                     headers='\n'.join('{}: {}'.format(k, v)
-                                      for k, v in msg.extra_headers),
+                                      for k, v in msg.extra_headers.items()),
                 )
                 alternatives = getattr(msg, 'alternatives', [])
                 for content, mimetype in alternatives:
