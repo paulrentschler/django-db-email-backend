@@ -21,7 +21,11 @@ class TestStorage(Storage):
 
     def _save(self, name, content):
         f = BytesIO()
-        f.write(content.read())
+        file_content = content.read()
+        if isinstance(file_content, bytes):
+            f.write(file_content)
+        else:
+            f.write(file_content.encode('utf8'))
         f.seek(0)
         if self.exists(name):
             name = self.get_available_name(name)

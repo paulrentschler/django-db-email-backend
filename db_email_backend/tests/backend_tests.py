@@ -6,7 +6,7 @@ from django.test.utils import override_settings
 from django.core.mail import send_mail, EmailMessage, EmailMultiAlternatives
 import django
 
-from db_email_backend.models import Email, EmailAlternative, EmailAttachment
+from db_email_backend.models import Email
 
 
 @override_settings(EMAIL_BACKEND='db_email_backend.backend.DBEmailBackend')
@@ -82,5 +82,3 @@ class DBEmailBackendTest(TestCase):
         self.assertEqual(alternative.content, '<h1>Testing stuff</h1>')
 
         self.assertEqual(email.attachments.count(), 0)
-
-
