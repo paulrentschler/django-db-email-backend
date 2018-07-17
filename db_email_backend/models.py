@@ -23,7 +23,7 @@ class Email(models.Model):
 
 @python_2_unicode_compatible
 class EmailAlternative(models.Model):
-    email = models.ForeignKey(Email, related_name='alternatives')
+    email = models.ForeignKey(Email, on_delete=models.CASCADE, related_name='alternatives')
     content = models.TextField(blank=True)
     mimetype = models.CharField(max_length=254, blank=True)
 
@@ -33,7 +33,7 @@ class EmailAlternative(models.Model):
 
 @python_2_unicode_compatible
 class EmailAttachment(models.Model):
-    email = models.ForeignKey(Email, related_name='attachments')
+    email = models.ForeignKey(Email, on_delete=models.CASCADE, related_name='attachments')
     filename = models.CharField(max_length=1000, blank=True)
     mimetype = models.CharField(max_length=254, blank=True)
     file = models.FileField(upload_to='db_email_backend')
