@@ -22,13 +22,42 @@ class EmailAttachmentInline(admin.StackedInline):
 
 
 class EmailAdmin(admin.ModelAdmin):
-    fields = (
-        ('from_email', 'create_date', 'content_subtype'),
-        ('to', 'cc', 'bcc'),
-        'subject', 'body', 'headers')
+    fieldsets = [
+        (None, {'fields': [
+            'create_date',
+            'from_email',
+            'to',
+            'cc',
+            'bcc',
+            'subject',
+        ]}),
+        ('Body', {'fields': [
+            'body',
+        ]}),
+        ('Meta', {'fields': [
+            'content_subtype',
+            'headers',
+        ]}),
+    ]
     readonly_fields = (
-        'create_date','from_email', 'to', 'cc', 'bcc', 'subject', 'body', 'content_subtype', 'headers')
-    list_display = ('subject', 'to', 'from_email', 'create_date', 'attachment_count', 'alternative_count')
+        'create_date',
+        'from_email',
+        'to',
+        'cc',
+        'bcc',
+        'subject',
+        'body',
+        'content_subtype',
+        'headers',
+    )
+    list_display = (
+        'subject',
+        'to',
+        'from_email',
+        'create_date',
+        'attachment_count',
+        'alternative_count',
+    )
     list_filter = ('content_subtype',)
     date_hierarchy = 'create_date'
     search_fields = ('to', 'from_email', 'cc', 'bcc', 'subject', 'body')
@@ -45,6 +74,5 @@ class EmailAdmin(admin.ModelAdmin):
     def has_add_permission(self, request, obj=None):
         return False
 
+
 admin.site.register(Email, EmailAdmin)
-
-
