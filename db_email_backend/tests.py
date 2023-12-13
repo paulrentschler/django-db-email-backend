@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, unicode_literals
 
 from django.test import TestCase
 from django.test.utils import override_settings
@@ -53,7 +52,10 @@ class DBEmailBackendTest(TestCase):
         with open('README.md') as f:
             self.assertEqual(attachment.file.read().decode('utf8'), f.read())
         if django.VERSION >= (1, 9):
-            self.assertIn(attachment.mimetype, ('application/octet-stream', 'text/markdown'))
+            self.assertIn(
+                attachment.mimetype,
+                ('application/octet-stream', 'text/markdown')
+            )
         else:
             self.assertEqual(attachment.mimetype, '')
 
@@ -62,8 +64,12 @@ class DBEmailBackendTest(TestCase):
     def test_send_alternatives(self):
         self.assertEqual(Email.objects.count(), 0)
 
-        e = EmailMultiAlternatives('test mail', 'this is just a test', 'jim@bob.com',
-                                   ['frank@example.com', 'joe@test.com'])
+        e = EmailMultiAlternatives(
+            'test mail',
+            'this is just a test',
+            'jim@bob.com',
+            ['frank@example.com', 'joe@test.com']
+        )
         e.attach_alternative('<h1>Testing stuff</h1>', 'text/html')
         e.send()
 

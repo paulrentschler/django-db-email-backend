@@ -30,17 +30,15 @@ setup_args = dict(
         'Natural Language :: English',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
         'Topic :: Software Development',
     ],
     packages=[
         'db_email_backend',
         'db_email_backend.migrations',
-        'db_email_backend.south_migrations'
     ],
     install_requires=[
-        "django>=1.8",
+        "django>=1.11",
         "pytz",
     ],
 )

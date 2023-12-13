@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 
 from django.core.files.base import ContentFile
 from django.core.mail.backends.base import BaseEmailBackend
 
 from .models import Email, EmailAlternative, EmailAttachment
 
+
 class DBEmailBackend(BaseEmailBackend):
+
     def send_messages(self, email_messages):
         for msg in email_messages:
             try:
@@ -19,7 +20,8 @@ class DBEmailBackend(BaseEmailBackend):
                     cc='; '.join(msg.cc),
                     bcc='; '.join(msg.bcc),
                     headers='\n'.join('{}: {}'.format(k, v)
-                                      for k, v in msg.extra_headers.items()),
+                                      for k, v in
+                                      list(msg.extra_headers.items())),
                 )
                 alternatives = getattr(msg, 'alternatives', [])
                 for content, mimetype in alternatives:
